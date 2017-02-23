@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/hacho/public_html/mapas/resources/views/zonas/alta.blade.php</file>
+            <file>file:/home/hacho/public_html/mapas/public/js/recorridos.js</file>
+            <file>file:/home/hacho/public_html/mapas/public/js/crear_zona.js</file>
+            <file>file:/home/hacho/public_html/mapas/public/js/mostrar_zona.js</file>
+            <file>file:/home/hacho/public_html/mapas/resources/views/recorridos/main.blade.php</file>
+            <file>file:/home/hacho/public_html/mapas/app/Http/Controllers/Controller_zona.php</file>
+        </group>
+    </open-files>
+</project-private>
