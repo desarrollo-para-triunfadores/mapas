@@ -18,6 +18,7 @@ class MigracionPreventista extends Migration {
             $table->string('dni');
             $table->string('color');
             $table->string('imagen');
+            $table->string('codigo');
             $table->timestamps();
         });
     }

@@ -1,4 +1,5 @@
-
+$("#side-zonas").addClass("active");
+$("#side-elem-registrar-zona").addClass("active");
 
 
 // In the following example, markers appear when the user clicks on the map.
@@ -7,13 +8,19 @@
 var map;
 var markers = [];
 var poly;
-
+var zoom = 13;
+var colores = {
+    1: "callout-danger",
+    2: "callout-success",
+    3: "callout-warning",
+    4: "callout-info"
+};
 
 
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
+        zoom: zoom,
         center: {lat: -27.450247333548926, lng: -58.987441062927246},
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
@@ -78,7 +85,6 @@ function punto_interseccion(m_viejo, m_nuevo, seg_viejo, seg_nuevo) {
         y: y_interseccion
     };
 
-//    console.log(punto);
 
     var valores_x_viejo = comparar_ejes(seg_viejo.punto_1.x, seg_viejo.punto_2.x);
     var valores_y_viejo = comparar_ejes(seg_viejo.punto_1.y, seg_viejo.punto_2.y);
@@ -157,24 +163,6 @@ function comprobar_interseccion(seg_viejo, seg_nuevo) {
                 interseccion = punto_interseccion(m_viejo, m_nuevo, seg_viejo, seg_nuevo);
 
             }
-//
-//
-//
-//            var casa = {
-//                interseccion: interseccion,
-//                m_arriba: seg_viejo.punto_2.y - seg_viejo.punto_1.y,
-//                m_abajo: seg_viejo.punto_2.x - seg_viejo.punto_1.x,
-//                y1: seg_nuevo.punto_1.y,
-//                y2: seg_nuevo.punto_2.y,
-//                y1_nuevo: y_seg_nuevo_punto_1,
-//                y2_nuevo: y_seg_nuevo_punto_2,
-//                m: m_viejo,
-//                seg_viejo: seg_viejo,
-//                seg_nuevo: seg_nuevo
-//
-//            };
-
-//            console.log(casa);
         }
     }
 
@@ -182,148 +170,163 @@ function comprobar_interseccion(seg_viejo, seg_nuevo) {
 }
 
 
-
-
-// Adds a marker to the map and push to the array.
 function addMarker(location, ultimo) {
-    var i = 0;
-    if (ultimo) {
-        i = 1;
-    }
-    var path = poly.getPath();
-    var colores = {
-        1: "callout-danger",
-        2: "callout-success",
-        3: "callout-warning",
-        4: "callout-info"
-    };
-
-    var num_color = Math.floor(Math.random() * (5 - 1)) + 1;
-// Because path is an MVCArray, we can simply append a new coordinate
-// and it will automatically appear.
-
-
-
-// Add a new marker at the new plotted point on the polyline.
-
-
-
-
-    var cruce = false;
-
-
-    if (path.getLength() > 2) {
-//        console.log(path.getLength());
-// console.log(path.getLength() - 2);
-//       alert(path.getLength());
-        var seg_nuevo = {
-            punto_1: {
-                x: markers[path.getLength() - 1].getPosition().lat(),
-                y: markers[path.getLength() - 1].getPosition().lng()
-            }, punto_2: {
-                x: location.lat(),
-                y: location.lng()
-            }
-        };
-
-
-        for (i; i < (path.getLength() - 2); i++) {
-            var seg_viejo = {
+    if ($('#boton-modal-guardar').is(':disabled')) {
+        var i = 0;
+        if (ultimo) {
+            i = 1;
+        }
+        var path = poly.getPath();
+        var cruce = false;
+        if (path.getLength() > 2) {
+            var seg_nuevo = {
                 punto_1: {
-                    x: markers[i].getPosition().lat(),
-                    y: markers[i].getPosition().lng()
+                    x: markers[path.getLength() - 1].getPosition().lat(),
+                    y: markers[path.getLength() - 1].getPosition().lng()
                 }, punto_2: {
-                    x: markers[i + 1].getPosition().lat(),
-                    y: markers[i + 1].getPosition().lng()
+                    x: location.lat(),
+                    y: location.lng()
                 }
             };
-            cruce = comprobar_interseccion(seg_viejo, seg_nuevo);
-            if (cruce) {
-                break;
+            for (i; i < (path.getLength() - 2); i++) {
+                var seg_viejo = {
+                    punto_1: {
+                        x: markers[i].getPosition().lat(),
+                        y: markers[i].getPosition().lng()
+                    }, punto_2: {
+                        x: markers[i + 1].getPosition().lat(),
+                        y: markers[i + 1].getPosition().lng()
+                    }
+                };
+                cruce = comprobar_interseccion(seg_viejo, seg_nuevo);
+                if (cruce) {
+                    break;
+                }
             }
-        }
-
-
-
-
-
-        if (cruce === false) {
-
-
-
+            if (cruce === false) {
+                var marker = new google.maps.Marker({
+                    position: location,
+                    animation: google.maps.Animation.DROP,
+                    icon: 'http://localhost/mapas/public/imagenes/add-placemark.png',
+                    title: '#' + (path.getLength() + 1),
+                    map: map
+                });
+                path.push(location);
+                markers.push(marker);
+                if (ultimo) {
+                    $('#boton-modal-guardar').attr('disabled', false);
+                    $('#boton-modal-guardar').click();
+                } else {
+                    agregar_etiqueta(marker, path.getLength());
+                    marker.addListener('click', function (event) {
+                        cerrar_zona(marker.title);
+                    });
+                    window.location = "#m" + path.getLength();
+                }
+            } else if (cruce === true) {
+                lanzar_msj("msj-info-1");
+            } else {
+                alert("etc");
+            }
+        } else {
             var marker = new google.maps.Marker({
                 position: location,
+                animation: google.maps.Animation.DROP,
                 icon: 'http://localhost/mapas/public/imagenes/add-placemark.png',
                 title: '#' + (path.getLength() + 1),
                 map: map
             });
-
             path.push(location);
-
-
+            agregar_etiqueta(marker);
             markers.push(marker);
-
-
-            if (ultimo) {
-                $('#boton-modal').click();
-            } else {
-                $("#lista").append('<div id= "m' + path.getLength() + '"class="animated bounce callout ' + colores[num_color] + '"><h4>Marcador #' + path.getLength() + ':</h4><p><strong>Latitud:</strong> ' + marker.getPosition().lat() + '. <strong>Longitud:</strong> ' + marker.getPosition().lng() + '.</p></div>');
-                marker.addListener('click', function (event) {
-                    cerrar_zona(marker.title);
-                });
-                window.location = "#m" + path.getLength();
-            }
-
-
-
-
-//            console.log(cruce);
-        } else if (cruce === true) {
-            $('#boton-modal-informacion').click();
-
-        } else {
-            alert("etc");
+            marker.addListener('click', function (event) {
+                cerrar_zona(event.latLng);
+            });
         }
-
-
     } else {
-        var marker = new google.maps.Marker({
-            position: location,
-            icon: 'http://localhost/mapas/public/imagenes/add-placemark.png',
-            title: '#' + (path.getLength() + 1),
-            map: map
-        });
+        lanzar_msj("msj-info-2");
+    }
 
-        path.push(location);
+}
 
-        $("#lista").append('<div class="callout ' + colores[num_color] + '"><h4>Marcador #' + path.getLength() + ':</h4><p><strong>Latitud:</strong> ' + marker.getPosition().lat() + '. <strong>Longitud:</strong> ' + marker.getPosition().lng() + '.</p></div>');
+function agregar_etiqueta(marker) {
+    var num_color = Math.floor(Math.random() * (5 - 1)) + 1;
+    $("#lista").append('<div class="callout ' + colores[num_color] + '"><h4>Marcador ' + marker.title + ':</h4><p><strong>Latitud:</strong> ' + marker.getPosition().lat() + '. <strong>Longitud:</strong> ' + marker.getPosition().lng() + '.</p></div>');
+}
 
-        markers.push(marker);
-
-        marker.addListener('click', function (event) {
-            cerrar_zona(event.latLng);
-        });
-
-//        console.log(cruce);
+function completar_marcadores() {
+    $("#lista").empty();
+    for (var tt = 0; tt <= markers.length; tt++) {
+        agregar_etiqueta(markers[tt]);
     }
 }
 
 
+
+
+function eliminar_ultimo_marcador() {
+    var path = poly.getPath();
+    markers.splice(markers.length - 1, 1);
+    path.pop(path.b[path.length - 1]);
+
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: zoom,
+        center: {
+            lat: markers[markers.length - 1].getPosition().lat(),
+            lng: markers[markers.length - 1].getPosition().lng()
+        },
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+    });
+    poly.setMap(map);
+    setMapOnAll(map);
+    map.addListener('click', function (event) {
+        addMarker(event.latLng, false);
+    });
+    map.addListener('zoom_changed', function () {
+        zoom = map.getZoom();
+    });
+    $('#boton-modal-guardar').attr('disabled', true);
+    completar_marcadores();
+}
 
 
 
 function cerrar_zona(location) {
     var path = poly.getPath();
-
     if (path.getLength() > 2) {
         if (location === markers[0].getPosition()) {
             addMarker(location, true);
         }
     } else {
-        $('#boton-modal-advertencia').click();
+        lanzar_msj("msj-warning");
     }
 
 }
+
+
+function lanzar_msj(tipo) {
+    $("#modal-advertencia").removeClass("modal-warning");
+    $("#modal-advertencia").removeClass("modal-info");
+    switch (tipo) {
+        case "msj-warning":
+            $("#modal-advertencia").addClass("modal-warning");
+            $('#advertencia-title').html("¡Atención!");
+            $('#advertencia-contenido').html("Una zona de control debe al menos poseer tres marcadores que actúen como vértices del área. Verifique y vuelva a intentar.");
+            break;
+        case "msj-info-2":
+            $("#modal-advertencia").addClass("modal-info");
+            $('#advertencia-title').html("Información:");
+            $('#advertencia-contenido').html("No puede agreagar más marcadores debido a que la zona ya fue delimitada. Puede seguir agregando si borra el último marcador colocado.");
+            break;
+        case "msj-info-1":
+            $("#modal-advertencia").addClass("modal-info");
+            $('#advertencia-title').html("Información:");
+            $('#advertencia-contenido').html("Para lograr un control efectivo y eficiente sobre la zona dibujada no se admiten cruzar los segmentos que conforman los lados de la misma.");
+            break;
+    }
+    $('#boton-modal-advertencia').click();
+}
+
 
 // Sets the map on all markers in the array.
 function setMapOnAll(map) {
@@ -343,18 +346,14 @@ function showMarkers() {
 }
 
 // Deletes all markers in the array by removing references to them.
-function deleteMarkers() {
-    clearMarkers();
+function eliminar_marcadores() {
+    $('#boton-modal-guardar').attr('disabled', true);
+    $("#lista").empty();
     markers = [];
-    poly.setMap(null);
-    poly.setPath();
+    initMap();
 }
 
 function enviar() {
-//    console.log("nombre " +$('#nombre').val());
-//    console.log("desc "+ $('#color').val());
-//    console.log("color"+ $('#detalle').val());
-
 
     var vertices = [];
     var path = poly.getPath();
@@ -375,18 +374,11 @@ function enviar() {
             color: $('#color').val(),
             descripcion: $('#descripcion').val(),
             vertices: vertices
-                    //    descripcion: $('#detalle').val()
-                    // marcadores: markers
         },
         success: function (data) {
-            /*
-             * Una vez completado el proceso se muestra el mensaje de exito.
-             */
-            console.log(data);
-            if (data ==='"1"'){
-                 window.location = "/zonas";
+            if (data === '"1"') {
+                window.location = "/zonas";
             }
-            
         }
     });
 }

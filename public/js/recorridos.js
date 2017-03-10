@@ -1,4 +1,5 @@
-
+$("#side-recorridos").addClass("active");
+$("#side-elem-recorridos-dia").addClass("active");
 
 
 // In the following example, markers appear when the user clicks on the map.
@@ -72,6 +73,7 @@ function instanciar_zona(id, nombre, color, fecha, coordenadas) {
             var marker = new google.maps.Marker({
                 position: rutas_activas[i]['marcadores'][r],
                 map: map,
+                animation: google.maps.Animation.DROP,
                 icon: 'http://localhost/mapas/public/imagenes/add-placemark.png',
                 title: "Fecha y hora: " + rutas_activas[i]['datos'][r]['fecha'] + " - " + rutas_activas[i]['datos'][r]['hora'] + ". Coordenadas de latitud: " + rutas_activas[i]['marcadores'][r]['lat'] + ". Coordenadas de longitud: " + rutas_activas[i]['marcadores'][r]['lng'] + "."
             });
@@ -124,6 +126,7 @@ function instanciar_recorrido(color, id, valor, coordenadas) {
         for (var r = 0; r < rutas_activas[i]['datos'].length; r++) {
             var marker = new google.maps.Marker({
                 position: rutas_activas[i]['marcadores'][r],
+                animation: google.maps.Animation.DROP,
                 map: map,
                 icon: 'http://localhost/mapas/public/imagenes/add-placemark.png',
                 title: "Fecha y hora: " + rutas_activas[i]['datos'][r]['fecha'] + " - " + rutas_activas[i]['datos'][r]['hora'] + ". Coordenadas de latitud: " + rutas_activas[i]['marcadores'][r]['lat'] + ". Coordenadas de longitud: " + rutas_activas[i]['marcadores'][r]['lng'] + "."
@@ -158,3 +161,25 @@ function color_solapa(num_tab, id, color) {
     $("#tab_" + id + "_2").css("border-top-color", "transparent");
     $("#tab_" + id + "_" + num_tab).css("border-top-color", color);
 }
+
+$('#select_preventista').on('change', function (evt) {
+    $(".widget-user-2").addClass("hide");
+    if ($("#select_preventista").val() !== null) {
+        $("#select_preventista").val().forEach(function (div) {
+            $("#" + div).removeClass("hide");
+        });
+    } else {
+        $(".widget-user-2").removeClass("hide");
+    }
+});
+
+$('#select_zonas').on('change', function (evt) {
+    $(".li_zona").addClass("hide");
+    if ($("#select_zonas").val() !== null) {
+        $("#select_zonas").val().forEach(function (div) {
+            $("#div" + div).removeClass("hide");
+        });
+    } else {
+        $(".li_zona").removeClass("hide");
+    }
+});

@@ -51,14 +51,35 @@ Zonas registradas
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="box box-solid" style="width:auto;height:500px;">
+                <div class="box box-solid">
+                    <ul class="products-list product-list-in-box">
+                        <li class="item">
+                            <div class="container" style="width:auto;">
+                                <form>
+                                    <div class="form-group">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                        <label>&nbsp;Filtrar zonas</label>
+                                        <select style="width: 100%" id="select_zonas" class="select2 form-control form-control-sm" multiple="multiple">
+                                            @foreach($zonas as $zona)
+                                            <option value="{{$zona->id}}">{{$zona->nombre}}</option>                                                    
+                                            @endforeach
+                                        </select> 
+                                        <small class="form-text text-muted"><strong>Información:</strong> seleccione una o más zonas para filtrar en la lista de zonas.</small>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="box box-solid">
                     <div class="box-header with-border">
+                        <i class="fa fa-map-o" aria-hidden="true"></i>
                         <h3 class="box-title">Registros de zonas</h3>
                     </div>
                     <div class="box-body" style="width:auto;height:490px; overflow: auto;">
                         <div class="box-group" id="accordion">
                             @foreach($zonas as $zona)
-                            <div class="panel box" style="border-top-color:  {{$zona->color}}">
+                            <div id="div{{$zona->id}}" class="panel box li_zona" style="border-top-color:  {{$zona->color}}">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">
                                         <a data-toggle="collapse" data-parent="#accordion" onclick="instanciar_zona('{{$zona->id}}', '{{$zona->nombre}}', '{{$zona->color}}', '{{$zona->created_at->diffForHumans()}}', {{$zona->coordenadas}});" href="#{{$zona->id}}" aria-expanded="false">
@@ -68,48 +89,67 @@ Zonas registradas
                                 </div>
                                 <div id="{{$zona->id}}" class="panel-collapse collapse" aria-expanded="true">
                                     <div class="box-body">                                        
-                                        <td>{{  $zona->descripcion }}</td>                                   
+                                        <td>{{$zona->descripcion}}</td>                                   
                                     </div>
                                 </div>
                             </div> 
                             @endforeach
                         </div>
                     </div>
+                    <div class="box-footer text-black">
+                        <div class="row">                            
+                            <div class="col-sm-12">
+                                <small class="form-text text-muted"><strong>Información:</strong> para visualizar una zona haga un click en el nombre de la misma.</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="box box-default" style="width:auto;height:500px;">
+
+                <div class="box box-solid">
+                    <ul class="products-list product-list-in-box">
+                        <li class="item">
+                            <div class="container" style="width:auto;">
+                                <form>
+                                    <div class="form-group">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                        <label>&nbsp;Filtrar preventistas</label>
+                                        <select style="width: 100%" id="select_preventista" class="select2 form-control form-control-sm" multiple="multiple">
+                                            @foreach($rutas as $ruta)
+                                            <option value="{{$ruta->preventista->dni}}">{{$ruta->preventista->apellido}} {{$ruta->preventista->nombre}}</option>                                                    
+                                            @endforeach
+                                        </select> 
+                                        <small class="form-text text-muted"><strong>Información:</strong> seleccione uno o más preventistas para filtrarlos en la lista de recorridos.</small>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="box box-default" style="width:auto;height:530px;">
                     <div class="box-header with-border">
                         <i class="fa fa-truck" aria-hidden="true"></i>
                         <h3 class="box-title">Recorridos del día</h3>
                     </div>
-                    <div class="box-body" style="background-color:#fafafa;">
-                        <div id="lista" style="width:auto;height:420px; overflow: auto;">
+                    <div class="box-body" style="background-color:#fafafa;">                       
+                        <div id="lista" style="width:auto;height:530px; overflow: auto;">
                             @foreach($rutas as $ruta)
-                            <div class="box box-widget widget-user-2">                   
+                            <div id="{{$ruta->preventista->dni}}" class="box box-widget widget-user-2">                   
                                 <div class="widget-user-header" style="background-color:{{$ruta->preventista->color}};">
                                     <div class="widget-user-image">
                                         @if ($ruta->preventista->imagen === "sin imagen")                                           
                                         <div class="form-group">                                                            
-                                            <img class="img-circle" src="{{ asset('imagenes/preventistas/sin-logo.png') }}" alt="User Avatar">                                
+                                            <img style="width:64px;height:64px" class="img-circle" src="{{ asset('imagenes/preventistas/sin-logo.png') }}" alt="User Avatar">                                
                                         </div>  
                                         @else
-                                        <img class="img-circle" src="{{ asset('imagenes/preventistas/' . $ruta->preventista->imagen) }}" alt="User Avatar">                                
+                                        <img style="width:64px;height:64px" class="img-circle" src="{{ asset('imagenes/preventistas/' . $ruta->preventista->imagen) }}" alt="User Avatar">                                
                                         @endif   
                                     </div>                             
                                     <h3 class="widget-user-username"><strong>{{$ruta->preventista->apellido}} {{$ruta->preventista->nombre}}</strong></h3>
                                     <h5 class="widget-user-desc">Preventista. DNI: {{$ruta->preventista->dni}}</h5>
                                 </div>
-
-
-
-
-
-
-
-
-
-
                                 <div class="box-footer no-padding">
                                     <div class="nav-tabs-custom">
                                         <ul class="nav nav-tabs">

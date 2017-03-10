@@ -3,19 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Preventista;
+use Storage;
 use App\Http\Requests;
+use Carbon\Carbon;
+Use Session;
 
-class Controller_preventista extends Controller
-{
+class Controller_preventista extends Controller {
+
+    public function __construct() {
+        Carbon::setlocale('es'); // Instancio en Español el manejador de fechas de Laravel
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $preventistas = Preventista::orderBy('codigo')->get();
+        return view('/preventistas/main')->with('preventistas', $preventistas);
     }
 
     /**
@@ -23,8 +30,7 @@ class Controller_preventista extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -34,9 +40,19 @@ class Controller_preventista extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $nombreImagen = 'sin imagen';
+        if ($request->file('imagen')) {
+            $file = $request->file('imagen');
+            $nombreImagen = 'preventista_' . time() . '.' . $file->getClientOriginalExtension();
+            Storage::disk('preventistas')->put($nombreImagen, \File::get($file));
+        }
+
+        $preventista = new Preventista($request->all());
+        $preventista->imagen = $nombreImagen;
+        $preventista->save();
+        Session::flash('message', '¡Se ha registrado a un nuevo preventista con éxito!');
+        return redirect()->route('preventistas.index');
     }
 
     /**
@@ -45,8 +61,7 @@ class Controller_preventista extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -56,8 +71,7 @@ class Controller_preventista extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -68,9 +82,25 @@ class Controller_preventista extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $preventista = Preventista::find($id);
+        if ($request->file('imagen')) {
+            $file = $request->file('imagen');
+            $nombreImagen = 'preventista_' . time() . '.' . $file->getClientOriginalExtension();
+            if (Storage::disk('preventistas')->exists($preventista->imagen)) {
+                Storage::disk('preventistas')->delete($preventista->imagen);   // Borramos la imagen anterior.      
+            }
+            $preventista->fill($request->all());
+            $preventista->imagen = $nombreImagen;  // Actualizamos el nombre de la nueva imagen.
+            Storage::disk('preventistas')->put($nombreImagen, \File::get($file));  // Movemos la imagen nueva al directorio /imagenes/usuarios   
+            $preventista->save();
+            Session::flash('message', '¡Se ha actualizado la información del preventista con éxito!');
+            return redirect()->route('preventistas.index');
+        }
+        $preventista->fill($request->all());
+        $preventista->save();
+        Session::flash('message', '¡Se ha actualizado la información del preventista con éxito!');
+        return redirect()->route('preventistas.index');
     }
 
     /**
@@ -79,8 +109,14 @@ class Controller_preventista extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+         $preventista = Preventista::find($id);
+        if ($preventista->imagen != 'sin imagen') {
+            Storage::disk('preventistas')->delete($preventista->imagen); // Borramos la imagen asociada.
+        }
+        $preventista->delete();
+        Session::flash('message', '¡El preventista seleccionado a sido eliminado!');
+        return redirect()->route('preventistas.index');
     }
+
 }

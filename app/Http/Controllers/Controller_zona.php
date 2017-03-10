@@ -7,6 +7,7 @@ use App\Zona;
 use App\Coordenada;
 use App\Http\Requests;
 use Carbon\Carbon;
+Use Session;
 
 class Controller_zona extends Controller {
 
@@ -91,7 +92,11 @@ class Controller_zona extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $zona = Zona::find($id);
+        $zona->fill($request->all());
+        $zona->save();
+        Session::flash('message', '¡Se ha actualizado la información de la zona con éxito!');
+        return redirect()->route('zonas.index');
     }
 
     /**
@@ -100,8 +105,11 @@ class Controller_zona extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-        //
+    public function destroy($id) {        
+        $zona = Zona::find($id);
+        $zona->delete();
+        Session::flash('message', '¡La zona seleccionada a sido eliminada!');
+        return redirect()->route('zonas.index');
     }
 
 }

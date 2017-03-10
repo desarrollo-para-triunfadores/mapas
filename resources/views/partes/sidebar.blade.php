@@ -1,23 +1,8 @@
-<!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-        <!-- Sidebar user panel -->
-        <!--        <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                    </div>
-                    <div class="pull-left info">
-                        <p>Alexander Pierce</p>
-                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                    </div>
-                </div>-->
-
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header" align="center">menú principal</li>
-            <li class="treeview">
+            <li id="side-zonas" class="treeview">
                 <a href="#">
                     <i class="fa fa-map-o" aria-hidden="true"></i> <span>Zonas</span>
                     <span class="pull-right-container">
@@ -25,11 +10,11 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('zonas.index') }}"><i class="fa fa-circle-o"></i> zonas registradas</a></li> 
-                    <li><a href="{{ route('zonas.create') }}"><i class="fa fa-circle-o"></i> registrar una zona</a></li>
+                    <li id="side-elem-zonas-registradas"><a href="{{ route('zonas.index') }}"><i class="fa fa-circle-o"></i> zonas registradas</a></li> 
+                    <li id="side-elem-registrar-zona"><a href="{{ route('zonas.create') }}"><i class="fa fa-circle-o"></i> registrar una zona</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li id="side-recorridos" class="treeview">
                 <a href="#">
                     <i class="fa fa-road" aria-hidden="true"></i>
                     <span>Recorridos</span>
@@ -38,11 +23,11 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('rutas.index') }}"><i class="fa fa-circle-o"></i> Recorridos del día</a></li>
-                    <li><a href="{{ route('rutas.index') }}"><i class="fa fa-circle-o"></i> Histórico</a></li>
+                    <li id="side-elem-recorridos-dia"><a href="{{ route('rutas.index') }}"><i class="fa fa-circle-o"></i> Recorridos del día</a></li>
+                    <li id="side-elem-recorridos-historico"><a href="{{ route('rutas.index') }}"><i class="fa fa-circle-o"></i> Histórico</a></li>
                 </ul>
             </li>   
-            <li class="treeview">
+            <li id="side-general" class="treeview">
                 <a href="#">
                     <i class="fa fa-suitcase" aria-hidden="true"></i>
                     <span>Generales</span>
@@ -51,12 +36,11 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Usuarios</a></li>
-                    <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Celulares</a></li>
-                    <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Preventistas</a></li>
+                    <li id="side-ele-usuarios"><a href="{{ route('usuarios.index') }}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+                    <li id="side-ele-celulares"><a href="{{ route('celulares.index') }}"><i class="fa fa-circle-o"></i> Celulares</a></li>
+                    <li id="side-ele-preventistas"><a href="{{ route('preventistas.index') }}"><i class="fa fa-circle-o"></i> Preventistas</a></li>
                 </ul>
             </li>  
         </ul>
     </section>
-    <!-- /.sidebar -->
 </aside>

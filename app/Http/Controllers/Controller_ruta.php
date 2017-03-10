@@ -23,7 +23,7 @@ class Controller_ruta extends Controller {
      */
     public function index() {
         $zonas = Zona::all();
-        $rutas = Ruta::all();
+        $rutas = Ruta::all();        
         return view('/recorridos/main')
                 ->with('zonas', $zonas)
                 ->with('rutas', $rutas);

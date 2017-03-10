@@ -47,6 +47,10 @@ return [
             'driver' => 'local',
             'root' => public_path('imagenes/preventistas'),
         ],
+         'usuarios' => [
+            'driver' => 'local',
+            'root' => public_path('imagenes/usuarios'),
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

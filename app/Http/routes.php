@@ -17,4 +17,7 @@
 
 Route::resource('zonas','Controller_zona');
 Route::resource('rutas','Controller_ruta');
+Route::resource('preventistas','Controller_preventista');
+Route::resource('usuarios','Controller_usuario');
+Route::resource('celulares','Controller_celular');
 Route::get('/', 'Controller_zona@index');

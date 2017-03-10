@@ -53,34 +53,45 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- bootstrap color picker -->
 <script src="{{ asset('plantilla/AdminLTE/plugins/colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 
+<!-- Select2 -->
+<script src="{{ asset('plantilla/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+
+<!-- DataTables -->
+<script src="{{ asset('plantilla/AdminLTE/plugins/DataTables/media/js/jquery.dataTables.min.js') }}"></script>
+
 <script>
+
+
+$(".select2").select2();
+
+$('#example').DataTable();
 
 //Colorpicker
 $(".my-colorpicker1").colorpicker({
     colorSelectors: {
-        negro: '#000000',
-        blanco: '#ffffff',
-        rojo: '#FF0000',
-        gris: '#777777',
-        azul: '#337ab7',
-        verde: '#5cb85c',
-        celeste: '#5bc0de',
-        amarillo: '#f0ad4e',
-        morado: '#d9534f'
+        '#000000': '#000000',
+        '#ffffff': '#ffffff',
+        '#FF0000': '#FF0000',
+        '#777777': '#777777',
+        '#337ab7': '#337ab7',
+        '#5cb85c': '#5cb85c',
+        '#5bc0de': '#5bc0de',
+        '#f0ad4e': '#f0ad4e',
+        '#d9534f': '#d9534f'
     }
 });
 //color picker with addon
 $(".my-colorpicker2").colorpicker({
     colorSelectors: {
-        negro: '#000000',
-        blanco: '#ffffff',
-        rojo: '#FF0000',
-        gris: '#777777',
-        azul: '#337ab7',
-        verde: '#5cb85c',
-        celeste: '#5bc0de',
-        amarillo: '#f0ad4e',
-        morado: '#d9534f'
+        '#000000': '#000000',
+        '#ffffff': '#ffffff',
+        '#FF0000': '#FF0000',
+        '#777777': '#777777',
+        '#337ab7': '#337ab7',
+        '#5cb85c': '#5cb85c',
+        '#5bc0de': '#5bc0de',
+        '#f0ad4e': '#f0ad4e',
+        '#d9534f': '#d9534f'
     }
 });
 </script>
