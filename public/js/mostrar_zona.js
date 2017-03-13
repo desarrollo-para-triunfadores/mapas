@@ -3,13 +3,10 @@ $("#side-elem-zonas-registradas").addClass("active");
 
 var map;
 var markers = [];
-var zoom = 13;
 var zona_activa = "";
-var center = {lat: -27.450247333548926, lng: -58.987441062927246};
 
 
 function initMap() {
-
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: zoom,
         center: center,

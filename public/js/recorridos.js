@@ -9,12 +9,11 @@ var map;
 var rutas_activas = [];
 var zona_activa = "";
 var markers = [];
-var zoom = 13;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: zoom,
-        center: {lat: -27.450247333548926, lng: -58.987441062927246},
+        center: center,
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
 

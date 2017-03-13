@@ -8,7 +8,6 @@ $("#side-elem-registrar-zona").addClass("active");
 var map;
 var markers = [];
 var poly;
-var zoom = 13;
 var colores = {
     1: "callout-danger",
     2: "callout-success",
@@ -21,7 +20,7 @@ var colores = {
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: zoom,
-        center: {lat: -27.450247333548926, lng: -58.987441062927246},
+        center: center,
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
 

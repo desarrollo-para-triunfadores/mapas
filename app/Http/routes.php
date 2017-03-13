@@ -20,4 +20,8 @@ Route::resource('rutas','Controller_ruta');
 Route::resource('preventistas','Controller_preventista');
 Route::resource('usuarios','Controller_usuario');
 Route::resource('celulares','Controller_celular');
-Route::get('/', 'Controller_zona@index');
+Route::resource('configuraciones','Controller_configuracion');
+Route::auth();
+
+Route::get('/', 'HomeController@index');
+   Route::PUT('usuarios/actpass/{usuarios}', 'Controller_usuario@actPass');

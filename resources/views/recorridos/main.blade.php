@@ -253,4 +253,8 @@ Zonas registradas
 
 @section('script')
 <script src="{{ asset('js/recorridos.js') }}"></script>
+<script>
+    var zoom = parseInt('{{ Auth::user()->configuracion->zoom }}');
+    var center = {lat: parseFloat('{{ Auth::user()->configuracion->latitud }}'), lng: parseFloat('{{ Auth::user()->configuracion->longitud }}')};
+</script>
 @endsection

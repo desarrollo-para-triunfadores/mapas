@@ -3,19 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Configuracion;
+use Carbon\Carbon;
+Use Session;
 use App\Http\Requests;
 
-class Controller_configuracion extends Controller
-{
+class Controller_configuracion extends Controller {
+
+    public function __construct() {
+        Carbon::setlocale('es'); // Instancio en Español el manejador de fechas de Laravel
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+       return view('/configuracion/main');
     }
 
     /**
@@ -23,8 +28,7 @@ class Controller_configuracion extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -34,8 +38,7 @@ class Controller_configuracion extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -45,8 +48,7 @@ class Controller_configuracion extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -56,8 +58,7 @@ class Controller_configuracion extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -68,8 +69,7 @@ class Controller_configuracion extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -79,8 +79,8 @@ class Controller_configuracion extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
 }

@@ -57,10 +57,10 @@ Preventistas registrados
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-12">
-                    <br>
+               
+                <div class="col-md-12">                    
+                    @include('partes.msj_acciones')                    
                 </div>
-                @include('partes.msj_acciones')
                 @foreach($preventistas as $preventista)
                 <div id="div{{$preventista->id}}" class="col-md-4 li_preventista">
                     <div class="box box-widget widget-user-2">

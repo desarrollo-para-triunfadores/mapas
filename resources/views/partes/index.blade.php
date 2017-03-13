@@ -3,7 +3,7 @@
     <head>        
         @include('partes.estilos')  
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition {{ Auth::user()->configuracion->color }} sidebar-mini">
         <div class="wrapper">
             <!-- top nav -->
             @include('partes.navTop') 

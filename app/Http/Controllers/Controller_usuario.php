@@ -9,7 +9,6 @@ use App\Http\Requests;
 use Carbon\Carbon;
 Use Session;
 
-
 class Controller_usuario extends Controller {
 
     public function __construct() {
@@ -21,7 +20,7 @@ class Controller_usuario extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {      
+    public function index() {
         $users = User::all();
         return view('/usuarios/main')->with('usuarios', $users);
     }
@@ -54,7 +53,7 @@ class Controller_usuario extends Controller {
         $user->password = bcrypt($request->password);
         $user->imagen = $nombreImagen;
         $user->save();
-        Session::flash('message','¡Se ha registrado a un nuevo usuario con éxito!');
+        Session::flash('message', '¡Se ha registrado a un nuevo usuario con éxito!');
         return redirect()->route('usuarios.index');
     }
 
@@ -66,6 +65,21 @@ class Controller_usuario extends Controller {
      */
     public function show($id) {
         //
+    }
+
+    /**
+     * Actualizar el password del usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function actPass(Request $request, $id) {
+        $usuario = User::find($id);
+        $usuario->password = bcrypt($request->password);
+        $usuario->save();
+        Session::flash('message', '¡Se ha actualizado el password del usuario con éxito!');
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -86,7 +100,6 @@ class Controller_usuario extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-
         $usuario = User::find($id);
         if ($request->file('imagen')) {
             $file = $request->file('imagen');
@@ -98,12 +111,12 @@ class Controller_usuario extends Controller {
             $usuario->imagen = $nombreImagen;  // Actualizamos el nombre de la nueva imagen.
             Storage::disk('usuarios')->put($nombreImagen, \File::get($file));  // Movemos la imagen nueva al directorio /imagenes/usuarios   
             $usuario->save();
-            Session::flash('message','¡Se ha actualizado la información del usuario con éxito!');
+            Session::flash('message', '¡Se ha actualizado la información del usuario con éxito!');
             return redirect()->route('usuarios.index');
         }
         $usuario->fill($request->all());
         $usuario->save();
-        Session::flash('message','¡Se ha actualizado la información del usuario con éxito!');
+        Session::flash('message', '¡Se ha actualizado la información del usuario con éxito!');
         return redirect()->route('usuarios.index');
     }
 
@@ -118,8 +131,8 @@ class Controller_usuario extends Controller {
         if ($usuario->imagen != 'sin imagen') {
             Storage::disk('usuarios')->delete($usuario->imagen); // Borramos la imagen asociada.
         }
-        $usuario->delete();       
-        Session::flash('message','¡El usuario seleccionado a sido eliminado!');
+        $usuario->delete();
+        Session::flash('message', '¡El usuario seleccionado a sido eliminado!');
         return redirect()->route('usuarios.index');
     }
 

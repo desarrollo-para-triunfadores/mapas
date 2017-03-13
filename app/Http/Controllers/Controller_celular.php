@@ -3,19 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
+use App\Celular;
 use App\Http\Requests;
+Use Session;
 
-class Controller_celular extends Controller
-{
+class Controller_celular extends Controller {
+
+    public function __construct() {
+        Carbon::setlocale('es'); // Instancio en Español el manejador de fechas de Laravel
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $celulares = Celular::orderBy('serial')->get();
+        return view('/celulares/main')->with('celulares', $celulares);
     }
 
     /**
@@ -23,8 +29,7 @@ class Controller_celular extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -34,9 +39,11 @@ class Controller_celular extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $celular = new Celular($request->all());
+        $celular->save();
+        Session::flash('message', '¡Se ha registrado a un nuevo celular con éxito!');
+        return redirect()->route('celulares.index');
     }
 
     /**
@@ -45,8 +52,7 @@ class Controller_celular extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -56,8 +62,7 @@ class Controller_celular extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -68,9 +73,12 @@ class Controller_celular extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $celular = Celular::find($id);
+        $celular->fill($request->all());
+        $celular->save();
+        Session::flash('message', '¡Se ha actualizado la información del registro con éxito!');
+        return redirect()->route('celulares.index');
     }
 
     /**
@@ -79,8 +87,11 @@ class Controller_celular extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $celular = Celular::find($id);
+        $celular->delete();
+        Session::flash('message', '¡El registro seleccionado a sido eliminado!');
+        return redirect()->route('celulares.index');
     }
+
 }
