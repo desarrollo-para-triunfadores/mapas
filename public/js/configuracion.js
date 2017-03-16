@@ -8,7 +8,7 @@ $("#side-elem-recorridos-dia").addClass("active");
 var map;
 var rutas_activas = [];
 var zona_activa = "";
-var markers = [];
+var marker = "";
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -19,6 +19,7 @@ function initMap() {
 
     map.addListener('zoom_changed', function () {
         zoom = map.getZoom();
+        $("#zoom").val(zoom);
     });
 
     marker = new google.maps.Marker({
@@ -27,14 +28,34 @@ function initMap() {
         animation: google.maps.Animation.DROP,
         position: center
     });
-    
+
+    marker.addListener('dragend', function () {
+        center = {
+            lat: marker.getPosition().lat(),
+            lng: marker.getPosition().lng()
+        };
+        $("#latitud").val(center.lat);
+        $("#longitud").val(center.lng);
+           $("#info").html("<strong>Información:</strong> mueva el marcador y ajuste el nivel del zoom para que esta sea la vista por defecto en todos los mapas del sistema. <b>Nivel de zoom:</b> "+zoom+". <b>Latitud:</b> "+center.lat.toFixed(6)+". <b>Longitud:</b> "+center.lng.toFixed(6)+".");
+    });
     marker.addListener('click', toggleBounce);
 }
 
+
+
 function toggleBounce() {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
+    if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+}
+
+
+function cambiar_info(tab) {
+    if (tab === "#tab_2") {
+        $("#info").html("<strong>Información:</strong> haga click sobre el esquema de color que le guste, el mismo quedará asociado únicamente al usuario logueado.");
+    } else {
+        $("#info").html("<strong>Información:</strong> mueva el marcador y ajuste el nivel del zoom para que esta sea la vista por defecto en todos los mapas del sistema. <b>Nivel de zoom:</b> "+zoom+". <b>Latitud:</b> "+center.lat.toFixed(6)+". <b>Longitud:</b> "+center.lng.toFixed(6)+".");
+    }
 }

@@ -25,3 +25,4 @@ Route::auth();
 
 Route::get('/', 'HomeController@index');
    Route::PUT('usuarios/actpass/{usuarios}', 'Controller_usuario@actPass');
+      Route::PUT('usuarios/actconf/{usuarios}', 'Controller_usuario@actConf');

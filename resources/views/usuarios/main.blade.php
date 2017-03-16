@@ -64,7 +64,7 @@ Usuarios registrados
                             <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                             <h3 class="box-title"> Registros</h3>
                         </div>
-                        <div class="box-body ">                            
+                        <div class="box-body">                            
                             @include('partes.msj_acciones')
                             <ul class="users-list clearfix">
                                 @foreach($usuarios as $usuario)

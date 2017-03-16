@@ -1,4 +1,4 @@
-<div id="modal-borrar" class="modal fade modal-INFO">
+<div id="modal-guardar-conf" class="modal fade modal-info">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,18 +7,22 @@
                 <h4 class="modal-title">Guardar configuración</h4>
             </div>
             <div class="modal-body">
-                <form id="form-borrar" action="" method="POST" accept-charset="UTF-8">
+                <form id="form-borrar" action="{{'/usuarios/actconf/'.Auth::user()->id}}" method="POST" accept-charset="UTF-8">
                     <input name="_method" type="hidden" value="PUT">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <h4 class="box-heading">¡Alerta de acción permanente!</h4>
-                    <p>Usted está a punto de proceder con la eliminación permanente del registro seleccionado. Si se encuentra completamente seguro prosiga con la acción.</p>
-                    <button id="boton_submit_borrar" type="submit" class="btn btn-primary hide"></button>
+                    <h4 class="box-heading">¡Atención!</h4>
+                    <p>Está por registrar la configuración. Puede volver a este apartado y volver configurar cuando desee.</p>
+                    <button id="boton_submit" type="submit" class="btn btn-primary hide"></button>              
+                    <input id="latitud" type="hidden" name="latitud" value="{{ Auth::user()->configuracion->latitud }}">
+                    <input id="longitud" type="hidden" name="longitud" value="{{ Auth::user()->configuracion->longitud }}">
+                    <input id="zoom" type="hidden" name="zoom" value="{{ Auth::user()->configuracion->zoom }}">
+                    <input id="color" type="hidden" name="color" value="{{ Auth::user()->configuracion->color }}">
                 </form> 
                 <br>      
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">volver</button>
-                <button type="button" class="btn btn-outline" onclick="$('#boton_submit_borrar').click()">eliminar zona</button>
+                <button type="button" class="btn btn-outline" onclick="$('#boton_submit').click()">registrar configuración</button>
             </div>
         </div>
     </div>

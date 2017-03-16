@@ -83,6 +83,21 @@ class Controller_usuario extends Controller {
     }
 
     /**
+     * Actualizar el password del usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function actConf(Request $request, $id) {
+        $usuario = User::find($id);
+        $usuario->configuracion->fill($request->all());
+        $usuario->configuracion->save();
+        Session::flash('message', '¡Se ha actualizado la configuración del sistema para el usuario con éxito!');
+        return view('/configuracion/main');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

@@ -250,7 +250,7 @@ function addMarker(location, ultimo) {
 
 function agregar_etiqueta(marker) {
     var num_color = Math.floor(Math.random() * (5 - 1)) + 1;
-    $("#lista").append('<div class="callout ' + colores[num_color] + '"><h4>Marcador ' + marker.title + ':</h4><p><strong>Latitud:</strong> ' + marker.getPosition().lat() + '. <strong>Longitud:</strong> ' + marker.getPosition().lng() + '.</p></div>');
+    $("#lista").append('<div class="callout ' + colores[num_color] + '"><h4>Marcador ' + marker.title + ':</h4><p><strong>Latitud:</strong> ' + marker.getPosition().lat().toFixed(6) + '. <strong>Longitud:</strong> ' + marker.getPosition().lng().toFixed(6) + '.</p></div>');
 }
 
 function completar_marcadores() {

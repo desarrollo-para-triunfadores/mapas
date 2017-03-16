@@ -9,7 +9,7 @@
         </a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li class="dropdown user user-menu">
+                <li title="Menú del usuario" class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         @if (Auth::user()->imagen === "sin imagen")                                                                                                                                    
                         <img style="width:26px;height:26px" alt="User Image" class="user-image" src="{{ asset('imagenes/usuarios/sin-logo.png') }}" alt="User Avatar">                                                               
@@ -44,7 +44,7 @@
                     </ul>
                 </li>
                 <li>                    
-                    <a href="{{ route('configuraciones.index') }}"><i class="fa fa-gears"></i></a>
+                    <a title="Acceder al panel de configuración del sistema" href="{{ route('configuraciones.index') }}"><i class="fa fa-gears"></i></a>
                 </li>
             </ul>
         </div>

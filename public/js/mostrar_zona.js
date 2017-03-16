@@ -38,7 +38,7 @@ function instanciar_zona(id, nombre, color, coordenadas) {
         $("#lista").empty();
         for (var i = 0; i < coordenadas.length; i++) {
             vertices[i] = {lat: parseFloat(coordenadas[i]['latitud']), lng: parseFloat(coordenadas[i]['longitud'])};
-            $("#lista").append('<div class="callout ' + colores[num_color] + '"><h4>Vértice #' + (i + 1) + ':</h4><p><strong>Latitud:</strong> ' + vertices[i]['lat'] + '. <strong>Longitud:</strong> ' + vertices[i]['lng'] + '.</p><input id="check' + (i + 1) + '" onchange="instanciar_marcador(' + vertices[i]['lat'] + ', ' + vertices[i]['lng'] + ', ' + (i + 1) + ')" type="checkbox"> Resaltar </div>');
+            $("#lista").append('<div class="callout ' + colores[num_color] + '"><h4>Vértice #' + (i + 1) + ':</h4><p><strong>Latitud:</strong> ' + vertices[i]['lat'].toFixed(6) + '. <strong>Longitud:</strong> ' + vertices[i]['lng'].toFixed(6) + '.</p><input id="check' + (i + 1) + '" onchange="instanciar_marcador(' + vertices[i]['lat'] + ', ' + vertices[i]['lng'] + ', ' + (i + 1) + ')" type="checkbox"> Resaltar </div>');
         }
 
         var zona = new google.maps.Polygon({
