@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 @include('partes.msj_lista_errores')
-                <form action="/preventistas" method="POST">
+                <form action="/preventistas" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">                                                           
                     <h3>Detalles del perfil</h3>
                     <br>

@@ -57,36 +57,42 @@ Usuarios registrados
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-12">
-                    <br>
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                            <h3 class="box-title"> Registros</h3>
+                <div class="col-md-12">                    
+                    @include('partes.msj_acciones')                    
+                </div>
+                @foreach($usuarios as $usuario)
+                <div class="col-md-4 li_user" id="{{$usuario->id}}">           
+                    <div class="box box-widget widget-user">
+                        <div class="widget-user-header {{$usuario->colores_sistema()}}">
+                            <h3 class="widget-user-username"><b>{{$usuario->name}}</b></h3>
+                            <h5 class="widget-user-desc">Registrado {{ $usuario->created_at->diffForHumans() }}</h5>
                         </div>
-                        <div class="box-body">                            
-                            @include('partes.msj_acciones')
-                            <ul class="users-list clearfix">
-                                @foreach($usuarios as $usuario)
-                                <li class="li_user" id="{{$usuario->id}}">
-                                    @if ($usuario->imagen === "sin imagen")                                                                                                                                    
-                                    <img style="width:128px;height:128px" alt="User Image" class="img-circle" src="{{ asset('imagenes/usuarios/sin-logo.png') }}" alt="User Avatar">                                                               
-                                    @else
-                                    <img style="width:128px;height:128px" alt="User Image" class="img-circle" src="{{ asset('imagenes/usuarios/' . $usuario->imagen) }}" alt="User Avatar">                                
-                                    @endif                                        
-                                    <h3 class="users-list-name"> {{$usuario->name}}</h3>
-                                    <h5 align="center"> {{$usuario->email}} </h5> 
-                                    <div class="text-center">
-                                        <a onclick="completar_campos({{$usuario}})" title="Editar este registro" class="btn btn-social-icon btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
-                                        <a onclick="abrir_modal_borrar({{$usuario->id}})" title="Eliminar este registro" class="btn btn-social-icon btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                        <div class="widget-user-image">
+                            @if ($usuario->imagen === "sin imagen")                                                                                                                                    
+                            <img style="width:90px;height:90px" alt="User Image" class="img-circle" src="{{ asset('imagenes/usuarios/sin-logo.png') }}" alt="User Avatar">                                                               
+                            @else
+                            <img style="width:90px;height:90px" alt="User Image" class="img-circle" src="{{ asset('imagenes/usuarios/' . $usuario->imagen) }}" alt="User Avatar">                                
+                            @endif 
+                        </div>
+                        <div class="box-footer">
+                            <div class="row">
+                                <div class="col-sm-8 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Email</h5>
+                                        <span>{{$usuario->email}}</span>
                                     </div>
-                                    <span class="users-list-date">registrado {{ $usuario->created_at->diffForHumans() }}</span>
-                                </li> 
-                                @endforeach
-                            </ul>
-                        </div>                      
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="description-block text-center">                                       
+                                        <a onclick="completar_campos({{$usuario}})" title="Editar este registro" class="btn btn-social-icon btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+                                        <a onclick="abrir_modal_borrar({{$usuario->id}})" title="Eliminar este registro" class="btn btn-social-icon btn-sm btn-danger"><i class="fa fa-trash"></i></a>                                  
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </section>

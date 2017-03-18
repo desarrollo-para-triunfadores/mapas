@@ -56,45 +56,60 @@ Preventistas registrados
                             </div>
                         </li>
                     </ul>
-                </div>
-               
+                </div>               
                 <div class="col-md-12">                    
                     @include('partes.msj_acciones')                    
                 </div>
-                @foreach($preventistas as $preventista)
+                @foreach($preventistas as $preventista)                                
                 <div id="div{{$preventista->id}}" class="col-md-4 li_preventista">
-                    <div class="box box-widget widget-user-2">
+                    <div class="box box-widget widget-user">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header" style="background-color:{{$preventista->color}};">
-                            <div class="widget-user-image">
-                                @if ($preventista->imagen === "sin imagen")                                           
-                                <img style="width:64px;height:64px" class="img-circle" src="{{ asset('imagenes/preventistas/sin-logo.png') }}" alt="User Avatar">                                
-                                @else
-                                <img  style="width:64px;height:64px" class="img-circle" src="{{ asset('imagenes/preventistas/' . $preventista->imagen) }}" alt="User Avatar">                                
-                                @endif   
-                            </div>  
-                            <h3 class="widget-user-username"><strong>{{$preventista->apellido}} {{$preventista->nombre}}</strong></h3>
+                            <h3 class="widget-user-username"><b>{{$preventista->apellido}} {{$preventista->nombre}}</b></h3>
                             <h5 class="widget-user-desc">Registrado {{ $preventista->created_at->diffForHumans() }}</h5>
                         </div>
-                        <div class="box-footer no-padding">
-                            <ul class="nav nav-stacked">
-                                <li><a href="#"><strong>Código de preventista:</strong> {{$preventista->codigo}}</a></li>
-                                <li><a href="#"><strong>DNI:</strong> {{$preventista->dni}}</a></li>
-                                <li><a href="#"><strong>Cantidad de recorridos:</strong> <span class="pull-right badge" style="background-color:{{$preventista->color}};">{{$preventista->rutas->count()}}</span></a></li>                                                                                        
-                            </ul>
+                        <div class="widget-user-image">
+                           @if ($preventista->imagen === "sin imagen")                                           
+                                <img style="width:90px;height:90px" class="img-circle" src="{{ asset('imagenes/preventistas/sin-logo.png') }}" alt="User Avatar">                                
+                                @else
+                                <img  style="width:90px;height:90px" class="img-circle" src="{{ asset('imagenes/preventistas/' . $preventista->imagen) }}" alt="User Avatar">                                
+                                @endif   
                         </div>
                         <div class="box-footer">
-                            <span class="text-left"><strong>&nbsp;&nbsp;&nbsp;Acciones:</strong></span>
-                            <div class="pull-right box-tools">                                
-                                <button type="button" class="btn btn-warning btn-sm" onclick="completar_campos({{$preventista}})" title="Editar este registro">
-                                    <i class="fa fa-pencil"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm" onclick="abrir_modal_borrar({{$preventista->id}})" title="Eliminar este registro">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </div>                            
+                            <div class="row">
+                                <div class="col-sm-6 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Código de preventista</h5>
+                                        <span class=" badge" style="background-color:{{$preventista->color}};">{{$preventista->codigo}}</span>
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">DNI</h5>
+                                        <span class=" badge" style="background-color:{{$preventista->color}};">{{$preventista->dni}}</span>
+                                    
+                                    </div>
+                                </div>                                
+                            </div>                               
+                            <hr>                            
+                            <div class="row">
+                                <div class="col-sm-6 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Cantidad de recorridos</h5>
+                                        <span class=" badge" style="background-color:{{$preventista->color}};">{{$preventista->rutas->count()}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 border-right">
+                                    <div class="description-block text-center">                                       
+                                        <a onclick="completar_campos({{$preventista}})"  title="Editar este registro" class="btn btn-social-icon btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+                                        <a onclick="abrir_modal_borrar({{$preventista->id}})" title="Eliminar este registro" class="btn btn-social-icon btn-sm btn-danger"><i class="fa fa-trash"></i></a>                                  
+                                    </div>
+                                </div>
+                            </div>  
                         </div>
                     </div>
-                </div>
+                </div>                                                                
                 @endforeach
             </div>
         </div>

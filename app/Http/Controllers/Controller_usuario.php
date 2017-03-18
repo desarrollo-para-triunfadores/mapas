@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Configuracion;
 use Storage;
 use App\Http\Requests;
 use Carbon\Carbon;
@@ -53,6 +54,10 @@ class Controller_usuario extends Controller {
         $user->password = bcrypt($request->password);
         $user->imagen = $nombreImagen;
         $user->save();
+
+        $configuracion = new Configuracion(['latitud' => '9.057175', 'longitud' => '-23.573202', 'zoom' => '2', 'color' => 'skin-blue', 'user_id' => $user-> id]);
+        $configuracion->save();
+
         Session::flash('message', '¡Se ha registrado a un nuevo usuario con éxito!');
         return redirect()->route('usuarios.index');
     }
